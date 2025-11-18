@@ -22,3 +22,6 @@ def read_root():
 def health():
     return {"status": "ok"}
 
+@app.get("/home")
+def home():
+    return{"message":"test case succesfully"}

@@ -52,3 +52,5 @@ def login_user(data: LoginSchema, db: Session = Depends(get_db)):
             "email": user.email
         }
     })
+    
+
