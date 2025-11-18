@@ -1,10 +1,22 @@
-from sqlalchemy import create_engine,text
+import os
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy.exc import OperationalError
 
-DATABASE_URL = "postgresql://postgres:12345@localhost:5432/job_app"
+# ENV variable will tell if we are running tests or production
+ENV = os.getenv("ENV", "prod")
 
-engine = create_engine(DATABASE_URL)
+if ENV == "test":
+    # SQLite DB for GitHub Actions CI
+    DATABASE_URL = "sqlite:///./test.db"
+    engine = create_engine(
+        DATABASE_URL,
+        connect_args={"check_same_thread": False}
+    )
+else:
+    # Your original PostgreSQL DB
+    DATABASE_URL = "postgresql://postgres:12345@localhost:5432/job_app"
+    engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
