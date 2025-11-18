@@ -6,3 +6,4 @@ httpx
 SQLAlchemy
 psycopg2
 email-validator
+passlib[bcrypt]
